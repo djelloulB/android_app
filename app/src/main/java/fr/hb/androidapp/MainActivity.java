@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private EditText et_prenom,et_nom;
     private SeekBar sb;
     //Données
-    ArrayList<String> listNoms;
-    ArrayList<String> listPrenoms;
+    ArrayList<EleveBean> eleves;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +44,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         bt_supprimer.setOnClickListener(this);
         bt_ajouter_plusieurs.setOnClickListener(this);
 
-        listNoms = new ArrayList<>();
-        listPrenoms = new ArrayList<>();
+        eleves = new ArrayList<>();
+
 
         tv_console.setText("");
     }
@@ -96,29 +96,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         for(int i = 0; i<nb; i++){
             //tv_console.append(nom + " "+ prenom + i + "\n");
-            listNoms.add(nom);
-            listPrenoms.add(prenom +i);
+
+            EleveBean eleve = new EleveBean();
+            eleve.nom = nom;
+            eleve.prenom = prenom + eleves.size();
+            eleves.add(eleve);
         }
 
     }
     public void deleteLast(){
 
-        if(listNoms.isEmpty()){
+        if(eleves.isEmpty()){
             Toast.makeText(this, "La liste est vide", Toast.LENGTH_SHORT).show();
         } else {
-            listNoms.remove(listNoms.size()-1);
-            listPrenoms.remove(listPrenoms.size()-1);
+            eleves.remove(eleves.size() -1);
+
         }
     }
     public  void refreshConsole(){
         String result ="";
 
-        for(int i= 0 ; i< listNoms.size(); i++){
+
+///////////////////////// old Method /////////////////////////////////////
+
+       /* for(int i= 0 ; i< listNoms.size(); i++){
             String nom = listNoms.get(i);
             String prenom = listPrenoms.get(i);
             result += nom + " " + prenom + "\n";
+        }*/
+
+
+/////////////////////////////////////////////////////////////////////////
+//        for(int i= 0 ; i< eleves.size(); i++){
+//            EleveBean eleve = eleves.get(i);
+//            result += eleve.nom + " " + eleve.prenom + "\n";
+//        }
+
+
+        //***************** forEach *************//
+        for (EleveBean eleve: eleves  ) {
+            result += eleve.nom + " " + eleve.prenom + "\n";
         }
 
         tv_console.setText(result);
     }
+ ////////////////////////////////////////////////////////////////////////
 }
