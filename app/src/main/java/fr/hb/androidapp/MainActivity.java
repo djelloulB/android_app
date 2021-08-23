@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -94,12 +95,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return;
         }
 
+        Random rd = new Random();
         for(int i = 0; i<nb; i++){
             //tv_console.append(nom + " "+ prenom + i + "\n");
 
             EleveBean eleve = new EleveBean();
-            eleve.nom = nom;
-            eleve.prenom = prenom + eleves.size();
+            eleve.setNom(nom);
+            //eleve.nom = nom;
+            eleve.setPrenom(prenom + eleves.size());
+            //eleve.prenom = prenom + eleves.size();
+            eleve.setAge(rd.nextInt(100));
+            //eleve.age = rd.nextInt(100);
+
             eleves.add(eleve);
         }
 
@@ -135,7 +142,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         //***************** forEach *************//
         for (EleveBean eleve: eleves  ) {
-            result += eleve.nom + " " + eleve.prenom + "\n";
+            result += eleve.getNom() + " " + eleve.getPrenom() + "\n";
         }
 
         tv_console.setText(result);
